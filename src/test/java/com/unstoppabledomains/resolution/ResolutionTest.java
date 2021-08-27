@@ -508,4 +508,35 @@ public class ResolutionTest {
         String testHash = "0x5fc604da00f502da70bfbc618088c0ce468ec9d18d05540935ae4118e8f50787";
         TestUtils.expectError(() -> resolution.unhash(testHash, NamingServiceType.ZNS), NSExceptionCode.NotImplemented);
     }
+
+    @Test
+    public void testOwnersOfCryptoDomains() throws Exception {
+        Resolution androidResolution = Resolution.builder()
+                .providerUrl(NamingServiceType.UNS, "https://rinkeby.infura.io/v3/9c802556477b42a6923b9b2e5baae0c5")
+                .contractAddress(NamingServiceType.UNS, "0x299974AeD8911bcbd2C61262605b89F591a53E83")
+                .providerUrl(NamingServiceType.ZNS, "https://dev-api.zilliqa.com")
+                .build();
+
+        assertEquals("0xed3db829bc6ea2351d76c6910900f6ca838b8118", androidResolution.getOwner("abstract003.crypto"));
+        assertEquals("0xb541c83710d922c93e38f40f4ec37fa3af603385", androidResolution.getOwner("smashing.crypto"));
+        assertEquals("0x77b40655786e2e6db719a3c6f5f41609114317d2", androidResolution.getOwner("soonandroid02.crypto"));
+        assertEquals("0xb541c83710d922c93e38f40f4ec37fa3af603385", androidResolution.getOwner("testing-staging-01.crypto"));
+        assertEquals("0x77b40655786e2e6db719a3c6f5f41609114317d2", androidResolution.getOwner("soonandroid01.crypto"));
+    }
+
+    @Test
+    public void testUnsupportedDomains() throws Exception {
+        Resolution androidResolution = Resolution.builder()
+                .providerUrl(NamingServiceType.UNS, "https://rinkeby.infura.io/v3/9c802556477b42a6923b9b2e5baae0c5")
+                .contractAddress(NamingServiceType.UNS, "0x299974AeD8911bcbd2C61262605b89F591a53E83")
+                .providerUrl(NamingServiceType.ZNS, "https://dev-api.zilliqa.com")
+                .build();
+
+        // Leave redundant spaces in domain name
+        TestUtils.expectError(() -> androidResolution.getOwner("abstract003.crypto "), NSExceptionCode.UnsupportedDomain);
+        TestUtils.expectError(() -> androidResolution.getOwner("smashing.crypto "), NSExceptionCode.UnsupportedDomain);
+        TestUtils.expectError(() -> androidResolution.getOwner("soonandroid02.crypto "), NSExceptionCode.UnsupportedDomain);
+        TestUtils.expectError(() -> androidResolution.getOwner("testing-staging-01.crypto "), NSExceptionCode.UnsupportedDomain);
+        TestUtils.expectError(() -> androidResolution.getOwner("soonandroid01.crypto "), NSExceptionCode.UnsupportedDomain);
+    }
 }

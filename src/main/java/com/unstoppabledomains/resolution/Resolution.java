@@ -250,6 +250,9 @@ public class Resolution implements DomainResolution {
         private IProvider provider;
 
         private Builder() {
+            // todo add example with testnet config
+            // todo require custom contract address if network is not mainnet (throw an exception)
+            // todo If network hasn't changed - don't require contract address
             String unsProxyAddress = NetworkConfigLoader.getContractAddress(Network.MAINNET, "ProxyReader");
         
             serviceConfigs = new HashMap<>(); 
