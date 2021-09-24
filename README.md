@@ -56,18 +56,15 @@ DomainResolution resolution = new Resolution();
 // Optionally override default config using builder options:
 // providerUrl overwrites chainId by making net_version JSON RPC call to the provider
 // in the following example blockchain would be set to the rinkeby testnet
+// Note: if a custom configuration is provided for one UNS layer, 
+// it should be provided for the other layer too
 DomainResolution resolution = Resolution.builder()
-                .providerUrl(NamingServiceType.ENS, "https://rinkeby.infura.io/v3/e0c0cb9d12c440a29379df066de587e6")
-                .build();
-                .providerUrl(NamingServiceType.UNS, "https://rinkeby.infura.io/v3/e0c0cb9d12c440a29379df066de587e6")
-                .build();
-
-// Infura config:
-
-DomainResolution resolution = Resolution.builder()
-                .chainId(NamingServiceType.ENS, Network.ROPSTEN)
-                .infura(NamingServiceType.ENS, <ProjectId>)
-                .infura(NamingServiceType.UNS, Network.MAINNET, <ProjectId>)
+                .ensProviderUrl("https://rinkeby.infura.io/v3/e0c0cb9d12c440a29379df066de587e6")
+                .ensContractAddress("0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e")
+                .unsProviderUrl(UNSLocation.Layer1, "https://rinkeby.infura.io/v3/e0c0cb9d12c440a29379df066de587e6")
+                .unsContractAddress(UNSLocation.Layer1, "0x299974AeD8911bcbd2C61262605b89F591a53E83")
+                .unsProviderUrl(UNSLocation.Layer2, "https://polygon-mumbai.infura.io/e0c0cb9d12c440a29379df066de587e6")
+                .unsContractAddress(UNSLocation.Layer2, NetworkConfigLoader.getContractAddress(Network.MUMBAI_TESTNET, "ProxyReader"))
                 .build();
 
 // Custom provider config:

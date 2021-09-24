@@ -22,7 +22,7 @@ public class DnsUtils {
   
   public static final int DEFAULT_TTL = 300;
   public List<DnsRecord> toList(Map<String, String> rawRecords) throws DnsException {
-    List<DnsRecord> dnsRecords = new ArrayList();
+    List<DnsRecord> dnsRecords = new ArrayList<>();
     List<DnsRecordsType> types = getAllDnsTypes(rawRecords);
     for (DnsRecordsType type: types) {
       List<DnsRecord> dnsType = constructDnsRecords(rawRecords, type);
@@ -32,7 +32,7 @@ public class DnsUtils {
   }
 
   public Map<String, String> toMap(List<DnsRecord> records) throws DnsException {
-    Map<String, String> map = new HashMap();
+    Map<String, String> map = new HashMap<>();
     for (DnsRecord record: records) {
       DnsRecordsType type = record.getType();
       String ttlInRecord = map.get("dns." + type + ".ttl");
@@ -66,7 +66,7 @@ public class DnsUtils {
   }
 
   private List<DnsRecordsType> getAllDnsTypes(Map<String, String> rawRecords) {
-    Set<DnsRecordsType> dnsTypes = new HashSet();
+    Set<DnsRecordsType> dnsTypes = new HashSet<>();
     for (Map.Entry<String, String> entry : rawRecords.entrySet()) {
       String[] chunks = entry.getKey().split("\\.");
       boolean isDnsType = chunks[0].equals("dns") && !chunks[1].equals("ttl");
@@ -74,7 +74,7 @@ public class DnsUtils {
         dnsTypes.add(DnsRecordsType.valueOf(chunks[1]));
       }
     }
-    return new ArrayList(dnsTypes);
+    return new ArrayList<>(dnsTypes);
   }
 
   private List<DnsRecord> constructDnsRecords(Map<String, String> rawRecords, DnsRecordsType type) throws DnsException {
@@ -83,7 +83,7 @@ public class DnsUtils {
     if (StringUtils.isEmpty(jsonValueString)) {
         return null;
     }
-    List<DnsRecord> data = new ArrayList();
+    List<DnsRecord> data = new ArrayList<>();
       JsonArray arr = getJsonArray(jsonValueString, type);
       for (JsonElement elem: arr) {
         String value = elem.getAsString();

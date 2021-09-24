@@ -12,6 +12,7 @@ public class NSExceptionParams {
   public String methodName;
   public String record;
   public String threadLimit;
+  public String layer;
 
   public NSExceptionParams(String format, String ...args) {
     Pattern pattern = Pattern.compile("\\|");
@@ -50,6 +51,10 @@ public class NSExceptionParams {
       }
       case "l": {
         threadLimit = value;
+        break ;
+      }
+      case "u": {
+        layer = value;
         break ;
       }
       default: {

@@ -38,6 +38,7 @@ dependencies {
     testImplementation 'org.mock-server:mockserver-netty:5.11.2'
     testImplementation 'org.mock-server:mockserver-client-java:5.11.2'
     testImplementation 'org.mockito:mockito-core:2.19.0'
+    testImplementation 'org.mockito:mockito-inline:2.19.0'
     testImplementation 'org.mockito:mockito-junit-jupiter:3.11.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.1'
 }

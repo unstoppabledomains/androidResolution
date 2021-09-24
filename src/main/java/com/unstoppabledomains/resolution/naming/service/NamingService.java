@@ -30,4 +30,8 @@ public interface NamingService {
     String getTokenUri(BigInteger tokenID) throws NamingServiceException;
 
     String getDomainName(BigInteger tokenID) throws NamingServiceException;
+
+    String getProviderUrl();
+
+    String getContractAddress();
 }
